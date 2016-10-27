@@ -250,6 +250,9 @@ body {
 .login-top input[type="password"] {
   padding: 12px 20px;
 }
+.login-top button {
+  padding: 12px 20px;
+}
 .login-bottom h3 a {
   font-size: 19px;
 }

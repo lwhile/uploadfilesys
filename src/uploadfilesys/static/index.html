@@ -14,24 +14,24 @@
 </head>
 <body>
 <div class="login">
-	<h2>文件提交系统</h2>
+	<h2>文件提交</h2>
 	<div class="login-top">
 		<h1>Java实验电子文档</h1>
-		<form>
+		<form action="/file" enctype="multipart/form-data" method="post">
             <select name="select" id="select">
                 <option value ="3">第三次(录入学生成绩)</option>
                 <option value="4">第四次</option>
             </select>
-			<input type="text" placeholder="完整学号"/>
-			<input type="text" placeholder="姓名" />
-            <input type="file"/>
+			<input type="text" name="id" placeholder="完整学号"/>
+			<input type="text" name="name" placeholder="姓名" />
+            <input type="file" name="file" id="file"/>
 	    </form>
 	    <div class="forgot">
 	    	<input type="submit" value="上传" >
 	    </div>
 	</div>
 	<div class="login-bottom">
-
+        <h3><a href="https://github.com/lwhhhh/uploadfilesys">Github</a> </h3>
 	</div>
 </div>
 

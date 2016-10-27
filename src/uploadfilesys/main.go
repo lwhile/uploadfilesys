@@ -3,10 +3,12 @@ package main
 import (
 	_ "uploadfilesys/routers"
 	"github.com/astaxie/beego"
+    "uploadfilesys/controllers"
 )
 
 func main() {
-    beego.Router("/file")
+    beego.Router("/", &controllers.MainController{})
+    beego.Router("/file", &controllers.FileController{}, "post:PostFile")
 	beego.Run()
 }
 
