@@ -9,8 +9,8 @@
 将忽略版本库 src/github.com/astaxie/beego
 将删除 .idea/goLibraries.xml
 
-/.idea/*
-src/github.com
+.idea
+src/github.com/
 将忽略版本库 src/gopkg.in/yaml.v2
 将忽略版本库 src/github.com/smartystreets/goconvey
 将忽略版本库 src/github.com/smartystreets/assertions
