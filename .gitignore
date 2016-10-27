@@ -1,22 +1,4 @@
 # Created by .ignore support plugin (hsz.mobi)
-将删除 .gitignore
-将删除 .idea/misc.xml
-将删除 .idea/modules.xml
-将删除 .idea/uploadfilesys.iml
-将删除 .idea/workspace.xml
-将删除 bin/
-将删除 pkg/
-将忽略版本库 src/github.com/astaxie/beego
-将删除 .idea/goLibraries.xml
-
 .idea
 src/github.com/
-将忽略版本库 src/gopkg.in/yaml.v2
-将忽略版本库 src/github.com/smartystreets/goconvey
-将忽略版本库 src/github.com/smartystreets/assertions
-将忽略版本库 src/github.com/go-sql-driver/mysql
-将忽略版本库 src/github.com/beego/bee
-将忽略版本库 src/github.com/lib/pq
-将忽略版本库 src/github.com/howeyc/fsnotify
-将忽略版本库 src/github.com/jtolds/gls
-将删除 src/uploadfilesys
+
