@@ -9,6 +9,7 @@ import (
 func main() {
     beego.Router("/", &controllers.MainController{})
     beego.Router("/file", &controllers.FileController{}, "post:PostFile")
+    beego.Router("/file", &controllers.FileController{}, "get:DownloadAFile")
 	beego.Run()
 }
 
