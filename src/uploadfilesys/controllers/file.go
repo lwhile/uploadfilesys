@@ -5,6 +5,8 @@ import (
     "github.com/astaxie/beego"
     "os"
     "path/filepath"
+    "archive/zip"
+    "io"
 )
 
 type FileController struct {
@@ -18,13 +20,33 @@ type ControllerZipFile interface {
 }
 
 func (ctrl *FileController) ComperssFolder(full_folder string, dest string) error {
-    println(dest)
-    _, err := os.Create(dest)
+    fp, err := os.Create(dest)
+    defer fp.Close()
     if err != nil {
         return err
     }
-    err = filepath.Walk(full_folder, func(path string, f os.FileInfo, err error) error {
-        if !f.IsDir() {
+    fpz := zip.NewWriter(fp)
+    defer fpz.Close()
+
+    // 获取待压缩文件列表
+    err = filepath.Walk(full_folder, func(path string, fileinfo os.FileInfo, err error) error {
+        if !fileinfo.IsDir() {
+            file, err1 := os.Open(path)
+            defer file.Close()
+            if err1 != nil {
+                return err1
+            }
+
+            header, _ := zip.FileInfoHeader(fileinfo)
+            zipwriter, err1 := fpz.CreateHeader(header)
+            if err1 != nil {
+                return err1
+            }
+
+            _, err1 = io.Copy(zipwriter, file)
+            if err1 != nil {
+                return err1
+            }
 
         }
         return nil

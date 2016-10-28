@@ -1,4 +1,8 @@
 # Created by .ignore support plugin (hsz.mobi)
 .idea
 src/github.com/
-
+srt/uploadfilesys/static/upload
+将删除 bin/
+将删除 pkg/
+将删除 src/uploadfilesys/models/
+将删除 src/uploadfilesys/static/js/
