@@ -60,6 +60,7 @@ func (ctrl *FileController) ComperssFolder(full_folder string, dest string) erro
 
 func (ctrl *FileController) PostFile() {
     fp, header, err := ctrl.GetFile("file")
+    println(fp)
     defer fp.Close()
     if err != nil {
         // todo: 处理错误
@@ -70,7 +71,7 @@ func (ctrl *FileController) PostFile() {
         if err == nil || os.IsExist(err) {
             ctrl.SaveToFile("file", target_folder + header.Filename)
         }
-        // todo: 返回状态
+        ctrl.Ctx.WriteString("1")
     }
 }
 
