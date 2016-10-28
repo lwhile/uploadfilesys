@@ -1,6 +1,4 @@
 <!DOCTYPE html>
-<html xmlns:required="http://www.w3.org/1999/xhtml">
-
 <head>
     <title>
     </title>
@@ -22,27 +20,27 @@
 <!-- Login Screen -->
 <div class="login-wrapper">
     <a href="index.html"><img width="100" height="100" src="images/logo_beego.png"/></a>
-    <h3>文件提交</h3>
+    <h3>软件2班作业提交 beta v0.1</h3>
     <form method="post" enctype="multipart/form-data" id="form" name="form">
         <div class="form-group">
             <select class="form-control" name="title" id="title">
-                <option value="Java第三次实验">Java第三次实验</option>
+                <option value="Java第三次实验">Java第三次实验(截止到11月2号)</option>
                 <option value="Java第四次实验">Java第四次实验</option>
                 <option value="Java第五次实验">Java第五次实验</option>
                 <option value="Java第六次实验">Java第六次实验</option>
-
+                <option value="数据库实验">数据库实验(截止到15周)</option>
             </select>
         </div>
         <div class="form-group">
             <div class="input-group">
-                <span class="input-group-addon">@</span>
-                <input class="form-control" placeholder="完整学号" type="text" name="id" id="id" required>
+                <span class="input-group-addon">*</span>
+                <input class="form-control" placeholder="完整学号:" type="text" name="id" id="id" required>
             </div>
         </div>
         <div class="form-group">
             <div class="input-group">
-                <span class="input-group-addon">@</span>
-                <input class="form-control" placeholder="姓名" type="text" name="name" id="name" required>
+                <span class="input-group-addon">*</span>
+                <input class="form-control" placeholder="姓名:" type="text" name="name" id="name" required>
             </div>
         </div>
         <div class="col-md-15">
@@ -55,7 +53,7 @@
         <input class="btn btn-lg btn-primary btn-block" type="submit" value="上传">
 
     </form>
-
+    <p><a href="https://github.com/lwhhhh/uploadfilesys">Follow Github</a></p>
 </div>
 <!-- End Login Screen -->
 </body>
@@ -86,44 +84,9 @@
             }
         } else {
             alert("只允许上传zip或rar文件");
-            return false;
+            return false;   // why ?
         }
 
     });
-    //    function on_submit() {
-    //        var formData = new FormData($(this)[0]);
-    //        alert(formData)
-    //        if ($("#id").val() == "" || $("#name").val() == "" || $("#file").val() == "") {
-    //            alert("信息填写不完整")
-    //        } else {
-    //            var filepath = $("input[name='file']").val();
-    //            var extStart = filepath.lastIndexOf(".");
-    //            var ext = filepath.substring(extStart, filepath.length).toUpperCase();
-    //            if (ext == ".RAR" || ext == ".ZIP") {
-    //                if (confirm("上传文件后无法撤销,是否确认信息填写无误?")) {
-    //                    $("#form").submit(function () {
-    //                        var formData = new FormData($(this)[0]);
-    //                        alert(formData);
-    //                        $.ajax({
-    //                            url: "/file",
-    //                            type: "POST",
-    //                            data: formData,
-    //                            async: false,
-    //                            success: function (resp) {
-    //                                alert(resp)
-    //                            },
-    //                            error: function (resp) {
-    //                                alert(resp)
-    //                            }
-    //                        })
-    //                    })
-    //                }
-    //            } else {
-    //                alert("只允许上传zip或rar文件");
-    //            }
-    //
-    //        }
-    //
-    //    }
 </script>
 </html>

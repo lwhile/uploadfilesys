@@ -7,6 +7,7 @@ import (
     "path/filepath"
     "archive/zip"
     "io"
+    "strings"
 )
 
 type FileController struct {
@@ -58,6 +59,8 @@ func (ctrl *FileController) ComperssFolder(full_folder string, dest string) erro
     return nil
 }
 
+// return:
+// 0:ok, 1:file error
 func (ctrl *FileController) PostFile() {
     fp, header, err := ctrl.GetFile("file")
     println(fp)
@@ -66,12 +69,22 @@ func (ctrl *FileController) PostFile() {
         // todo: 处理错误
     } else {
         title := ctrl.GetString("title")
+        id := ctrl.GetString("id")
+        name := ctrl.GetString("name")
+
+        tempfilename := header.Filename
+        ext := strings.Split(tempfilename, ".")[1]
+        if ext != "rar" || ext != "zip" {
+            ctrl.Ctx.WriteString("1")
+        }
+        header.Filename = id + name + "." + ext
         target_folder := "static/upload/" + title + "/"
         err := os.Mkdir(target_folder, 0777)
         if err == nil || os.IsExist(err) {
             ctrl.SaveToFile("file", target_folder + header.Filename)
         }
-        ctrl.Ctx.WriteString("1")
+
+        ctrl.Ctx.WriteString("0")
     }
 }
 
