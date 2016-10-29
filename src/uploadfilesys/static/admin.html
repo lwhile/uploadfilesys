@@ -74,11 +74,8 @@
         })
     }
     function download_file() {
-        $.ajax({
-            url:"/file",
-            type:"GET",
-            data:{title:document.getElementById("titles").value}
-        })
+        var href = "/file?title=" + document.getElementById("titles").value;
+        window.open(href);
     }
     function delete_work() {
         alert(document.getElementById("titles").value);
@@ -87,7 +84,7 @@
                 url: "/work",
                 type: "delete",
                 //data: $("#form1").serialize(),
-                data:{titles:document.getElementById("titles").value},
+                data: {titles: document.getElementById("titles").value},
                 success: function (resp) {
                     alert(resp);
                     //window.location.reload()
