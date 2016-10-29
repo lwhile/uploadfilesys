@@ -1,42 +1,54 @@
 package models
 
 import (
+    "github.com/astaxie/beego/orm"
+    _ "github.com/go-sql-driver/mysql"
 )
-import "github.com/astaxie/beego/orm"
+
 
 type CRUD interface {
 
 }
 
 type Work struct {
-    ID int64
-    title string
+    Id    int64 `orm:"pk;auto"`
+    Title string
 }
 
 func init() {
+    orm.RegisterDriver("mysql", orm.DRMySQL)
+    orm.RegisterDataBase("default", "mysql", "root:wh5622@/uploadfilesys?charset=utf8")
     orm.RegisterModel(new(Work))
+
 }
 
-func Getworks() ([]*Work, error) {
+func GetWorks() ([]*Work, error) {
     ORM := orm.NewOrm()
     var results []orm.Params
     var works []*Work
-    _, err := ORM.QueryTable("works").Values(&results)
+    _, err := ORM.QueryTable("work").Values(&results)
     if err != nil {
         return nil, err
     }
     for _, v := range results {
         work := &Work{}
-        work.ID = v["id"].(int64)
-        work.title = v["title"].(string)
+        work.Id = v["Id"].(int64)
+        work.Title = v["Title"].(string)
         works = append(works, work)
     }
     return works, nil
 }
 
 func InsertWork(title string) error {
+    println(title)
     ORM := orm.NewOrm()
-    work := Work{title:title}
-    _, err := ORM.Insert(&work)
+    work := &Work{Title:title}
+    _, err := ORM.Insert(work)
     return err
+}
+
+func DeleteWork(Title string) (int64, error) {
+    ORM := orm.NewOrm()
+    nums, err := ORM.Delete(&Work{Title:Title})
+    return nums, err
 }
