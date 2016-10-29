@@ -63,10 +63,9 @@ func (ctrl *FileController) ComperssFolder(full_folder string, dest string) erro
 // 0:ok, 1:file error
 func (ctrl *FileController) PostFile() {
     fp, header, err := ctrl.GetFile("file")
-    println(fp)
     defer fp.Close()
     if err != nil {
-        // todo: 处理错误
+        ctrl.Ctx.WriteString("获取文件描述符失败")
     } else {
         title := ctrl.GetString("title")
         id := ctrl.GetString("id")
@@ -75,7 +74,7 @@ func (ctrl *FileController) PostFile() {
         tempfilename := header.Filename
         ext := strings.Split(tempfilename, ".")[1]
         if ext != "rar" || ext != "zip" {
-            ctrl.Ctx.WriteString("1")
+            ctrl.Ctx.WriteString("不支持的文件格式")
         }
         header.Filename = id + name + "." + ext
         target_folder := "static/upload/" + title + "/"
@@ -84,7 +83,7 @@ func (ctrl *FileController) PostFile() {
             ctrl.SaveToFile("file", target_folder + header.Filename)
         }
 
-        ctrl.Ctx.WriteString("0")
+        ctrl.Ctx.WriteString("提交成功")
     }
 }
 
@@ -93,10 +92,11 @@ func (ctrl *FileController) DownloadAFile() {
     title := ctrl.GetString("title")
     path_now, err := os.Getwd()
     if err != nil {
-        // todo: 处理错误
+        ctrl.Ctx.WriteString("文件获取失败")
     }
     dest_file := title + ".zip"
     ctrl.ComperssFolder(path_now + "/static/upload/第三次", path_now + "/static/upload/" + dest_file)
+    // todo : 未完成
 }
 
 
