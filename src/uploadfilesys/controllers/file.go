@@ -8,6 +8,7 @@ import (
     "archive/zip"
     "io"
     "strings"
+    "uploadfilesys/models"
 )
 
 type FileController struct {
@@ -21,6 +22,7 @@ type ControllerZipFile interface {
 }
 
 func (ctrl *FileController) ComperssFolder(full_folder string, dest string) error {
+    println(full_folder)
     fp, err := os.Create(dest)
     defer fp.Close()
     if err != nil {
@@ -66,6 +68,7 @@ func (ctrl *FileController) PostFile() {
     defer fp.Close()
     if err != nil {
         ctrl.Ctx.WriteString("获取文件描述符失败")
+        return
     } else {
         title := ctrl.GetString("title")
         id := ctrl.GetString("id")
@@ -73,8 +76,9 @@ func (ctrl *FileController) PostFile() {
 
         tempfilename := header.Filename
         ext := strings.Split(tempfilename, ".")[1]
-        if ext != "rar" || ext != "zip" {
+        if ext != "rar" && ext != "zip" {
             ctrl.Ctx.WriteString("不支持的文件格式")
+            return
         }
         header.Filename = id + name + "." + ext
         target_folder := "static/upload/" + title + "/"
@@ -83,20 +87,39 @@ func (ctrl *FileController) PostFile() {
             ctrl.SaveToFile("file", target_folder + header.Filename)
         }
 
-        ctrl.Ctx.WriteString("提交成功")
+        ctrl.Ctx.WriteString("上传成功,学委已经收到你的作业")
+        return
     }
 }
 
 // 将特定目录下的文件打包成zip压缩文件
 func (ctrl *FileController) DownloadAFile() {
+    flag_download := false
     title := ctrl.GetString("title")
-    path_now, err := os.Getwd()
+    println(title)
+    works, err := models.GetWorks()
     if err != nil {
-        ctrl.Ctx.WriteString("文件获取失败")
+        ctrl.Ctx.WriteString("系统发生错误")
     }
-    dest_file := title + ".zip"
-    ctrl.ComperssFolder(path_now + "/static/upload/第三次", path_now + "/static/upload/" + dest_file)
-    // todo : 未完成
+    for _, work := range works {
+        if title == work.Title {
+            flag_download = true
+        }
+    }
+    if flag_download {
+        path_now, err := os.Getwd()
+        if err != nil {
+            ctrl.Ctx.WriteString("文件获取失败")
+            return
+        }
+        dest_file := title + ".zip"
+        ctrl.ComperssFolder(path_now + "/static/upload/" + title, path_now + "/static/upload/" + dest_file)
+        //ctrl.Ctx.WriteString("ok")
+        ctrl.Ctx.Output.Download(path_now + "/static/upload/" + dest_file, dest_file)
+    } else {
+        ctrl.Ctx.WriteString("不存在该文件")
+    }
+
 }
 
 

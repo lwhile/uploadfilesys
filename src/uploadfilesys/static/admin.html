@@ -35,9 +35,9 @@
 
     <br><br>
 
-    <form method="post" id="form1" name="form">
+    <form method="delete" id="form1" name="form1">
         <div class="form-group">
-            <select class="form-control" name="title" id="titles">
+            <select class="form-control" name="titles" id="titles">
             </select>
         </div>
     </form>
@@ -74,9 +74,29 @@
         })
     }
     function download_file() {
-
+        $.ajax({
+            url:"/file",
+            type:"GET",
+            data:{title:document.getElementById("titles").value}
+        })
     }
     function delete_work() {
+        alert(document.getElementById("titles").value);
+        if (confirm("确认删除该作业?")) {
+            $.ajax({
+                url: "/work",
+                type: "delete",
+                //data: $("#form1").serialize(),
+                data:{titles:document.getElementById("titles").value},
+                success: function (resp) {
+                    alert(resp);
+                    //window.location.reload()
+                },
+                error: function (resp) {
+                    alert(resp)
+                }
+            })
+        }
 
     }
 </script>

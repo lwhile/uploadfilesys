@@ -40,7 +40,6 @@ func GetWorks() ([]*Work, error) {
 }
 
 func InsertWork(title string) error {
-    println(title)
     ORM := orm.NewOrm()
     work := &Work{Title:title}
     _, err := ORM.Insert(work)
