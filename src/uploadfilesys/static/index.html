@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html>
 <head>
     <title>
     </title>
@@ -23,12 +24,7 @@
     <h3>软件2班作业提交 beta v0.1</h3>
     <form method="post" enctype="multipart/form-data" id="form" name="form">
         <div class="form-group">
-            <select class="form-control" name="title" id="title">
-                <option value="Java第三次实验">Java第三次实验(截止到11月2号)</option>
-                <option value="Java第四次实验">Java第四次实验</option>
-                <option value="Java第五次实验">Java第五次实验</option>
-                <option value="Java第六次实验">Java第六次实验</option>
-                <option value="数据库实验">数据库实验(截止到15周)</option>
+            <select class="form-control" name="title" id="titles">
             </select>
         </div>
         <div class="form-group">
@@ -58,6 +54,17 @@
 <!-- End Login Screen -->
 </body>
 <script>
+    $(document).ready(function () {
+        $.getJSON("/work", function (resp) {
+            var select_ele = document.getElementById("titles");
+            for (var i = 0; i < resp.length; i++) {
+                var option = document.createElement("option");
+                option.innerHTML = resp[i].Title;
+                option.value = resp[i].Title;
+                select_ele.appendChild(option);
+            }
+        });
+    });
     $("form#form").submit(function () {
         var formData = new FormData($(this)[0]);
         var filepath = $("input[name='file']").val();

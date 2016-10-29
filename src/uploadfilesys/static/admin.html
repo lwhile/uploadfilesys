@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html>
 <head>
     <title>
     </title>
@@ -29,56 +30,54 @@
                 <input class="form-control" placeholder="作业名:" type="text" name="title" required>
             </div>
         </div>
-        <input class="btn btn-lg btn-primary btn-block" type="submit" value="发布作业">
+        <input class="btn btn-lg btn-primary btn-block" type="button" value="发布作业" onclick="on_submit()">
     </form>
+
     <br><br>
+
     <form method="post" id="form1" name="form">
         <div class="form-group">
-            <select class="form-control" name="title">
-                <option value="Java第三次实验">Java第三次实验(截止到11月2号)</option>
-                <option value="Java第四次实验">Java第四次实验</option>
-                <option value="Java第五次实验">Java第五次实验</option>
-                <option value="Java第六次实验">Java第六次实验</option>
-                <option value="数据库实验">数据库实验(截止到15周)</option>
+            <select class="form-control" name="title" id="titles">
             </select>
         </div>
-
-        <input class="btn btn-lg btn-primary btn-block" type="submit" value="下载Zip">
     </form>
+    <input class="btn btn-lg btn-primary btn-block" type="submit" value="打包并下载该作业" onclick="download_file()">
+    <input class="btn btn-lg btn-primary btn-block" type="submit" value="删除该作业" onclick="delete_work()">
 
 </div>
 <!-- End Login Screen -->
 </body>
 <script>
-    $("form#form").submit(function () {
-        var formData = new FormData($(this)[0]);
-        var filepath = $("input[name='file']").val();
-        var extStart = filepath.lastIndexOf(".");
-        var ext = filepath.substring(extStart, filepath.length).toUpperCase();
-        if (ext == ".RAR" || ext == ".ZIP") {
-            if (confirm("上传文件后无法撤销,是否确认信息填写无误?")) {
-                $.ajax({
-                    url: "/file",
-                    type: "POST",
-                    data: formData,
-                    async: true,
-                    success: function (resp) {
-                        alert(resp)
-                    },
-                    error: function (resp) {
-                        alert(resp)
-                    },
-                    cache: false,
-                    contentType: false,
-                    processData: false
-                });
-                return false;   // 不加这句表单post后会跳转到index.html, why ?
+    $(document).ready(function () {
+        $.getJSON("/work", function (resp) {
+            var select_ele = document.getElementById("titles");
+            for (var i = 0; i < resp.length; i++) {
+                var option = document.createElement("option");
+                option.innerHTML = resp[i].Title;
+                option.value = resp[i].Title;
+                select_ele.appendChild(option);
             }
-        } else {
-            alert("只允许上传zip或rar文件");
-            return false;   // why ?
-        }
-
+        });
     });
+    function on_submit() {
+        $.ajax({
+            url: "/work",
+            type: "POST",
+            data: $("#form").serialize(),
+            success: function (resp) {
+                alert(resp);
+                window.location.reload();
+            },
+            error: function (resp) {
+                alert(resp)
+            }
+        })
+    }
+    function download_file() {
+
+    }
+    function delete_work() {
+
+    }
 </script>
 </html>
