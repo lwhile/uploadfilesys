@@ -47,6 +47,9 @@
             </div>
         </div>
         <input class="btn btn-lg btn-primary btn-block" id="submit" name="submit" type="submit" value="上传">
+        <div class="btn btn-lg btn-block btn-default" id="load-more" style="display: none;">
+            <i class="icon-spinner icon-spin"></i>上传中...
+        </div>
 
     </form>
     <p><a href="https://github.com/lwhhhh/uploadfilesys">Follow Github</a></p>
@@ -78,11 +81,12 @@
                     data: formData,
                     async: true,
                     beforeSend: function () {
-                        $("#submit").val("上传中...");
-                        $('#submit').attr("disable", true);
+                        $("#submit").hide();
+                        $("#load-more").show();
                     },
                     success: function (resp) {
-                        $("#submit").val("上传");
+                        $("#load-more").hide();
+                        $("#submit").show();
                         alert(resp)
                     },
                     error: function (resp) {
