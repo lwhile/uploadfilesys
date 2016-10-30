@@ -46,7 +46,7 @@
                 </div>
             </div>
         </div>
-        <input class="btn btn-lg btn-primary btn-block" type="submit" value="上传">
+        <input class="btn btn-lg btn-primary btn-block" id="submit" name="submit" type="submit" value="上传">
 
     </form>
     <p><a href="https://github.com/lwhhhh/uploadfilesys">Follow Github</a></p>
@@ -77,7 +77,12 @@
                     type: "POST",
                     data: formData,
                     async: true,
+                    beforeSend: function () {
+                        $("#submit").val("上传中...");
+                        $('#submit').attr("disable", true);
+                    },
                     success: function (resp) {
+                        $("#submit").val("上传");
                         alert(resp)
                     },
                     error: function (resp) {
@@ -88,6 +93,8 @@
                     processData: false
                 });
                 return false;   // 不加这句表单post后会跳转到index.html, why ?
+            } else {
+                return false;
             }
         } else {
             alert("只允许上传zip或rar文件");
