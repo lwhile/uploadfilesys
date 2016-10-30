@@ -10,6 +10,7 @@ type WorkController struct {
     beego.Controller
 }
 
+//需要用户验证
 func (ctrl *WorkController) PostWork() {
     title := strings.TrimSpace(ctrl.GetString("title"))
     err := models.InsertWork(title)
@@ -30,6 +31,7 @@ func (ctrl *WorkController) GetWork() {
     ctrl.ServeJSON()
 }
 
+//需要用户验证
 func (ctrl *WorkController) DeleteWork() {
     title := strings.TrimSpace(ctrl.GetString("titles"))
     println("title:", title)

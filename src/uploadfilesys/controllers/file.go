@@ -93,6 +93,7 @@ func (ctrl *FileController) PostFile() {
 }
 
 // 将特定目录下的文件打包成zip压缩文件
+// 需要用户验证
 func (ctrl *FileController) DownloadAFile() {
     flag_download := false
     title := ctrl.GetString("title")

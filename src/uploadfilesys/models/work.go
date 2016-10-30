@@ -17,7 +17,7 @@ type Work struct {
 
 func init() {
     orm.RegisterDriver("mysql", orm.DRMySQL)
-    orm.RegisterDataBase("default", "mysql", "root:wh5622@/uploadfilesys?charset=utf8")
+    orm.RegisterDataBase("default", "mysql", "root:*@/uploadfilesys?charset=utf8")
     orm.RegisterModel(new(Work))
 
 }
