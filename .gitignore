@@ -2,13 +2,13 @@
 .idea
 src/github.com/
 src/gopkg.in/
-#src/uploadfilesys/conf/app.conf
+src/uploadfilesys/conf/app.conf
 src/uploadfilesys/static/upload/
 src/uploadfilesys/static/font/
 src/uploadfilesys/static/images/
 src/uploadfilesys/static/javascripts/
 src/uploadfilesys/static/stylesheets/
-#src/uploadfilesys/models/work.go
+src/uploadfilesys/models/work.go
 bin/
 pkg/
 将删除 bin/

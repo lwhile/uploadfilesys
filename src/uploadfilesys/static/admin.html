@@ -28,6 +28,7 @@
             <div class="input-group">
                 <span class="input-group-addon">*</span>
                 <input class="form-control" placeholder="作业名:" type="text" name="title" required>
+                <input type="text" id="token" name="token" hidden>
             </div>
         </div>
         <input class="btn btn-lg btn-primary btn-block" type="button" value="发布作业" onclick="on_submit()">
@@ -39,11 +40,12 @@
         <div class="form-group">
             <select class="form-control" name="titles" id="titles">
             </select>
+            <input type="text" id="token1" name="token" hidden>
         </div>
     </form>
     <input class="btn btn-lg btn-primary btn-block" type="submit" value="打包并下载该作业" onclick="download_file()">
-    <input class="btn btn-lg btn-primary btn-block" type="submit" value="删除该作业" onclick="delete_work()">
-
+    <!-- <input class="btn btn-lg btn-primary btn-block" type="submit" value="删除该作业" onclick="delete_work()">
+    -->
 </div>
 <!-- End Login Screen -->
 </body>
@@ -60,6 +62,8 @@
         });
     });
     function on_submit() {
+        var token = prompt("输入管理员口令", "");
+        $("#token").val(token);
         $.ajax({
             url: "/work",
             type: "POST",
@@ -78,6 +82,8 @@
         window.open(href);
     }
     function delete_work() {
+        var token = prompt("输入管理员口令", "");
+        $("#token1").val(token);
         alert(document.getElementById("titles").value);
         if (confirm("确认删除该作业?")) {
             $.ajax({

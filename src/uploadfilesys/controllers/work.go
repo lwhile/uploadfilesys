@@ -12,13 +12,20 @@ type WorkController struct {
 
 //需要用户验证
 func (ctrl *WorkController) PostWork() {
-    title := strings.TrimSpace(ctrl.GetString("title"))
-    err := models.InsertWork(title)
-    if err != nil {
-        ctrl.Ctx.WriteString("发布作业失败")
-        return
+    token := ctrl.GetString("token")
+    println("token: ", token)
+    if models.CheckIsAdmin(token) {
+        title := strings.TrimSpace(ctrl.GetString("title"))
+        err := models.InsertWork(title)
+        if err != nil {
+            ctrl.Ctx.WriteString("发布作业失败")
+            return
+        }
+        ctrl.Ctx.WriteString("发布作业成功")
+    } else {
+        ctrl.Ctx.WriteString("口令错误.")
     }
-    ctrl.Ctx.WriteString("发布作业成功")
+
 }
 
 func (ctrl *WorkController) GetWork() {
@@ -33,16 +40,23 @@ func (ctrl *WorkController) GetWork() {
 
 //需要用户验证
 func (ctrl *WorkController) DeleteWork() {
-    title := strings.TrimSpace(ctrl.GetString("titles"))
-    println("title:", title)
-    num, err := models.DeleteWork(title)
-    if err != nil {
-        ctrl.Ctx.WriteString("删除失败,系统发生错误.")
-        return
+    token := ctrl.Input().Get("token")
+    println(token)
+    if models.CheckIsAdmin(token) {
+        title := strings.TrimSpace(ctrl.Input().Get("titles"))
+        println("title:", title)
+        num, err := models.DeleteWork(title)
+        if err != nil {
+            ctrl.Ctx.WriteString("删除失败,系统发生错误.")
+            return
+        }
+        if num == 0 {
+            ctrl.Ctx.WriteString("删除失败,找不到对应的作业")
+            return
+        }
+        ctrl.Ctx.WriteString("删除成功!")
+    } else {
+        ctrl.Ctx.WriteString("口令错误.")
     }
-    if num == 0 {
-        ctrl.Ctx.WriteString("删除失败,找不到对应的作业")
-        return
-    }
-    ctrl.Ctx.WriteString("删除成功!")
+
 }

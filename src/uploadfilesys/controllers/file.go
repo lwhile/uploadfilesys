@@ -62,7 +62,6 @@ func (ctrl *FileController) ComperssFolder(full_folder string, dest string) erro
 }
 
 // return:
-// 0:ok, 1:file error
 func (ctrl *FileController) PostFile() {
     fp, header, err := ctrl.GetFile("file")
     defer fp.Close()
@@ -93,8 +92,9 @@ func (ctrl *FileController) PostFile() {
 }
 
 // 将特定目录下的文件打包成zip压缩文件
-// 需要用户验证
 func (ctrl *FileController) DownloadAFile() {
+    //token := ctrl.GetString("token")
+    // Get请求的口令验证下个版本实现,现在赶着上线
     flag_download := false
     title := ctrl.GetString("title")
     println(title)
