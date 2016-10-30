@@ -2,10 +2,9 @@ package models
 
 import "github.com/astaxie/beego"
 
-func CheckIsAdmin(adminname, password string) {
-    adminname_conf := beego.AppConfig.String("adminname")
-    adminpassword_conf := beego.AppConfig.String("adminpassword")
-    if adminname_conf == adminname && adminpassword_conf == password {
+func CheckIsAdmin(token string) {
+    admintoken_conf := beego.AppConfig.String("admintoken")
+    if admintoken_conf == token {
         return true
     }
     return false
