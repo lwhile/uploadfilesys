@@ -17,3 +17,4 @@ uploadfilesys是一个用Go语言编写,使用了beego框架的Web网站.
 
 
 ## 运行截图
+![image](https://github.com/lwhhhh/uploadfilesys/blob/master/demo.png)
