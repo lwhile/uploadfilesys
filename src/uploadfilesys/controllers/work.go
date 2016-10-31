@@ -22,8 +22,10 @@ func (ctrl *WorkController) PostWork() {
             return
         }
         ctrl.Ctx.WriteString("发布作业成功")
+        return
     } else {
         ctrl.Ctx.WriteString("口令错误.")
+        return
     }
 
 }

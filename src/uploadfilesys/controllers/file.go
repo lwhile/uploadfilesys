@@ -22,7 +22,6 @@ type ControllerZipFile interface {
 }
 
 func (ctrl *FileController) ComperssFolder(full_folder string, dest string) error {
-    println(full_folder)
     fp, err := os.Create(dest)
     defer fp.Close()
     if err != nil {
@@ -55,7 +54,6 @@ func (ctrl *FileController) ComperssFolder(full_folder string, dest string) erro
         return nil
     })
     if err != nil {
-        println(err)
         return err
     }
     return nil
@@ -119,6 +117,7 @@ func (ctrl *FileController) DownloadAFile() {
         ctrl.Ctx.Output.Download(path_now + "/static/upload/" + dest_file, dest_file)
     } else {
         ctrl.Ctx.WriteString("不存在该文件")
+        return
     }
 
 }
