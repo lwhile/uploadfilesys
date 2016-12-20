@@ -71,8 +71,8 @@ func (ctrl *FileController) PostFile() {
         id := ctrl.GetString("id")
         name := ctrl.GetString("name")
 
-        tempfilename := header.Filename
-        ext := strings.Split(tempfilename, ".")[1]
+        filenameEle := strings.Split(header.Filename, ".")
+        ext := filenameEle[len(filenameEle) - 1]
         if ext != "rar" && ext != "zip" {
             ctrl.Ctx.WriteString("不支持的文件格式")
             return
